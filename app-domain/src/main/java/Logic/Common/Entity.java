@@ -1,7 +1,7 @@
 import System;
 import NHibernate.Proxy;
 
-namespace Logic.Entities {
+namespace Logic.Common {
     
     public abstract class Entity {
         

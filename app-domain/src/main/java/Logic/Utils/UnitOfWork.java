@@ -6,7 +6,7 @@ import NHibernate.Linq;
 
 namespace Logic.Utils {
     
-    public class UnitOfWork extends IDisposable {
+    public class UnitOfWork {
         
         private ISession _session;
         
@@ -14,30 +14,9 @@ namespace Logic.Utils {
         
         private boolean _isAlive = true;
         
-        private boolean _isCommitted;
-        
         public UnitOfWork(SessionFactory sessionFactory) {
             this._session = sessionFactory.OpenSession();
             this._transaction = this._session.BeginTransaction(IsolationLevel.ReadCommitted);
-        }
-        
-        public final void Dispose() {
-            if (!this._isAlive) {
-                return;
-            }
-            
-            this._isAlive = false;
-            try {
-                if (this._isCommitted) {
-                    this._transaction.Commit();
-                }
-                
-            }
-            finally {
-                this._transaction.Dispose();
-                this._session.Dispose();
-            }
-            
         }
         
         public final void Commit() {
@@ -45,7 +24,15 @@ namespace Logic.Utils {
                 return;
             }
             
-            this._isCommitted = true;
+            try {
+                this._transaction.Commit();
+            }
+            finally {
+                this._isAlive = false;
+                this._transaction.Dispose();
+                this._session.Dispose();
+            }
+            
         }
         
         internal final <T> T Get(long id) {
