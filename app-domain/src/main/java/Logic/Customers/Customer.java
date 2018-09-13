@@ -1,6 +1,5 @@
 package Logic.Customers;
 
-import CSharpFunctionalExtensions.*;
 import Logic.Common.*;
 import Logic.Movies.*;
 import java.util.*;
@@ -9,7 +8,7 @@ import java.math.*;
 
 public class Customer extends Entity
 {
-	private String _name;
+	private CustomerName _name;
 	public CustomerName getName()
 	{
 		return (CustomerName)_name;
@@ -19,7 +18,7 @@ public class Customer extends Entity
 		_name = value;
 	}
 
-	private String _email;
+	private Email _email;
 	public Email getEmail()
 	{
 		return (Email)_email;
@@ -35,10 +34,10 @@ public class Customer extends Entity
 		Status = value;
 	}
 
-	private BigDecimal _moneySpent = new BigDecimal(0);
+	private Dollars _moneySpent = Dollars.Create(new BigDecimal(0));
 	public Dollars getMoneySpent()
 	{
-		return Dollars.Of(_moneySpent);
+		return _moneySpent;
 	}
 	protected void setMoneySpent(Dollars value)
 	{
@@ -46,7 +45,7 @@ public class Customer extends Entity
 	}
 
 	private List<PurchasedMovie> _purchasedMovies;
-	public IReadOnlyList<PurchasedMovie> getPurchasedMovies()
+	public List<PurchasedMovie> getPurchasedMovies()
 	{
 		return _purchasedMovies;
 	}
@@ -66,7 +65,7 @@ public class Customer extends Entity
 //ORIGINAL LINE: _email = email ?? throw new ArgumentNullException(nameof(email));
 		_email = (email != null) ? email : throw new NullPointerException("email");
 
-		setMoneySpent(Dollars.Of(0));
+		setMoneySpent(Dollars.Create(BigDecimal.ZERO);
 		setStatus(CustomerStatus.Regular);
 	}
 

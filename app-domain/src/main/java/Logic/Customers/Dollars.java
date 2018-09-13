@@ -1,6 +1,7 @@
 package Logic.Customers;
 
-import CSharpFunctionalExtensions.*;
+import Logic.Common.ValueObject;
+
 import java.math.*;
 
 public class Dollars extends ValueObject<Dollars>
@@ -15,7 +16,7 @@ public class Dollars extends ValueObject<Dollars>
 
 	public final boolean getIsZero()
 	{
-		return getValue().compareTo(0) == 0;
+		return getValue().compareTo(BigDecimal.ZERO) == 0;
 	}
 
 	private Dollars(BigDecimal value)
@@ -23,29 +24,29 @@ public class Dollars extends ValueObject<Dollars>
 		Value = value;
 	}
 
-	public static Result<Dollars> Create(BigDecimal dollarAmount)
+	public static Dollars Create(BigDecimal dollarAmount)
 	{
-		if (dollarAmount.compareTo(0) < 0)
+		if (dollarAmount.compareTo(BigDecimal.ZERO) < 0)
 		{
-			return Result.<Dollars>Fail("Dollar amount cannot be negative");
+			throw new IllegalArgumentException("Dollar amount cannot be negative");
 		}
 
 		if (dollarAmount.compareTo(MaxDollarAmount) > 0)
 		{
-			return Result.<Dollars>Fail("Dollar amount cannot be greater than " + MaxDollarAmount);
+			throw new IllegalArgumentException("Dollar amount cannot be greater than " + MaxDollarAmount);
 		}
 
-		if (dollarAmount % 0.01 > 0)
+		if (dollarAmount.doubleValue() % 0.01 > 0)
 		{
-			return Result.<Dollars>Fail("Dollar amount cannot contain part of a penny");
+			throw new IllegalArgumentException("Dollar amount cannot contain part of a penny");
 		}
 
-		return Result.Ok(new Dollars(dollarAmount));
+		return new Dollars(dollarAmount);
 	}
 
 	public static Dollars Of(BigDecimal dollarAmount)
 	{
-		return Create(dollarAmount).Value;
+		return Create(dollarAmount);
 	}
 
 	public static Dollars OpMultiply(Dollars dollars, BigDecimal multiplier)
@@ -70,9 +71,4 @@ public class Dollars extends ValueObject<Dollars>
 		return getValue().hashCode();
 	}
 
-//C# TO JAVA CONVERTER TODO TASK: The following operator overload is not converted by C# to Java Converter:
-	public static implicit operator BigDecimal(Dollars dollars)
-	{
-		return dollars.getValue();
-	}
 }

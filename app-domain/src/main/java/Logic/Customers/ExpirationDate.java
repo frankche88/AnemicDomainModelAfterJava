@@ -1,32 +1,33 @@
 package Logic.Customers;
 
-import CSharpFunctionalExtensions.*;
-import java.util.*;
-import java.time.*;
+
+import java.time.LocalDateTime;
+
+import Logic.Common.ValueObject;
 
 public class ExpirationDate extends ValueObject<ExpirationDate>
 {
 	public static final ExpirationDate Infinite = new ExpirationDate(null);
 
-	private Optional<LocalDateTime> Date = Optional.empty();
-	public final Optional<LocalDateTime> getDate()
+	private LocalDateTime Date;
+	public final LocalDateTime getDate()
 	{
 		return Date;
 	}
 
 	public final boolean getIsExpired()
 	{
-		return this != Infinite && getDate().compareTo(LocalDateTime.UtcNow) < 0;
+		return this != Infinite && getDate().compareTo(LocalDateTime.now()) < 0;
 	}
 
-	private ExpirationDate(Optional<LocalDateTime> date)
+	private ExpirationDate(LocalDateTime date)
 	{
 		Date = date;
 	}
 
-	public static Result<ExpirationDate> Create(LocalDateTime date)
+	public static ExpirationDate Create(LocalDateTime date)
 	{
-		return Result.Ok(new ExpirationDate(date));
+		return new ExpirationDate(date);
 	}
 
 	@Override
@@ -41,20 +42,6 @@ public class ExpirationDate extends ValueObject<ExpirationDate>
 		return getDate().hashCode();
 	}
 
-//C# TO JAVA CONVERTER TODO TASK: The following operator overload is not converted by C# to Java Converter:
-	public static explicit operator ExpirationDate(Optional<LocalDateTime> date)
-	{
-		if (date.isPresent())
-		{
-			return Create(date.get()).Value;
-		}
 
-		return Infinite;
-	}
 
-//C# TO JAVA CONVERTER TODO TASK: The following operator overload is not converted by C# to Java Converter:
-	public static implicit <LocalDateTime> operator Nullable(ExpirationDate date)
-	{
-		return date.getDate();
-	}
 }
