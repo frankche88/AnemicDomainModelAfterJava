@@ -63,11 +63,11 @@ public class PurchasedMovie extends Entity
 
 	public PurchasedMovie(Movie movie, Customer customer, Dollars price, ExpirationDate expirationDate)
 	{
-		if (price == null || price.IsZero)
+		if (price == null || price.getIsZero())
 		{
 			throw new IllegalArgumentException("price");
 		}
-		if (expirationDate == null || expirationDate.IsExpired)
+		if (expirationDate == null || expirationDate.getIsExpired())
 		{
 			throw new IllegalArgumentException("expirationDate");
 		}

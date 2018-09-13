@@ -72,7 +72,7 @@ public class Customer extends Entity
 
 	public boolean HasPurchasedMovie(Movie movie)
 	{
-		return getPurchasedMovies().Any(x -> x.Movie == movie && !x.ExpirationDate.IsExpired);
+		return getPurchasedMovies().Any(x = Logic.Movies.Movie.OpEquality(> x.Movie, movie) && !x.ExpirationDate.IsExpired);
 	}
 
 	public void PurchaseMovie(Movie movie)
@@ -88,12 +88,12 @@ public class Customer extends Entity
 		PurchasedMovie purchasedMovie = new PurchasedMovie(movie, this, price, expirationDate);
 		_purchasedMovies.add(purchasedMovie);
 
-		setMoneySpent(getMoneySpent() + price);
+		setMoneySpent(Logic.Customers.Dollars.OpAddition(getMoneySpent(), price));
 	}
 
 	public Result CanPromote()
 	{
-		if (getStatus().IsAdvanced)
+		if (getStatus().getIsAdvanced())
 		{
 			return Result.Fail("The customer already has the Advanced status");
 		}

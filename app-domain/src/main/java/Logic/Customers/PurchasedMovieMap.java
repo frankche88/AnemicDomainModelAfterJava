@@ -1,17 +1,21 @@
-import System;
-import FluentNHibernate.Mapping;
+package Logic.Customers;
 
-namespace Logic.Customers {
-    
-    public class PurchasedMovieMap extends ClassMap<PurchasedMovie> {
-        
-        public PurchasedMovieMap() {
-            Id(() => {  }, x.Id);
-            Map(() => {  }, x.Price).CustomType().Access.CamelCaseField(Prefix.Underscore);
-            Map(() => {  }, x.PurchaseDate);
-            Map(() => {  }, x.ExpirationDate).CustomType().Access.CamelCaseField(Prefix.Underscore).Nullable();
-            References(() => {  }, x.Movie);
-            References(() => {  }, x.Customer);
-        }
-    }
+import FluentNHibernate.Mapping.*;
+import java.util.*;
+import java.time.*;
+import java.math.*;
+
+public class PurchasedMovieMap extends ClassMap<PurchasedMovie>
+{
+	public PurchasedMovieMap()
+	{
+		Id(x -> x.Id);
+
+		Map(x -> x.Price).<BigDecimal>CustomType().Access.CamelCaseField(Prefix.Underscore);
+		Map(x -> x.PurchaseDate);
+		Map(x -> x.ExpirationDate).<Optional<LocalDateTime>>CustomType().Access.CamelCaseField(Prefix.Underscore).Nullable();
+
+		References(x -> x.Movie);
+		References(x -> x.Customer);
+	}
 }
