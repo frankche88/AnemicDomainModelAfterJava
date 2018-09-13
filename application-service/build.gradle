@@ -9,7 +9,7 @@ tasks.withType(JavaCompile) {
 
 
 dependencies {
-	compile (project(':banking-domain'))
+	compile (project(':app-domain'))
     
 	compile (project(':infrastructure-hibernate'))
 	
