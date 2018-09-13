@@ -1,9 +1,9 @@
 import System.Collections.Generic;
 import System.Linq;
-import Logic.Entities;
+import Logic.Common;
 import Logic.Utils;
 
-namespace Logic.Repositories {
+namespace Logic.Movies {
     
     public class MovieRepository extends Repository<Movie> {
         
