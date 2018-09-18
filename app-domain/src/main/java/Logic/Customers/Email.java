@@ -1,58 +1,43 @@
 package Logic.Customers;
 
-import CSharpFunctionalExtensions.*;
+import java.util.regex.Pattern;
 
-public class Email extends ValueObject<Email>
-{
+import Logic.Common.ValueObject;
+
+public class Email extends ValueObject<Email> {
 	private String Value;
-	public final String getValue()
-	{
+
+	public final String getValue() {
 		return Value;
 	}
 
-	private Email(String value)
-	{
+	private Email(String value) {
 		Value = value;
 	}
 
-	public static Result<Email> Create(String email)
-	{
+	public static Email Create(String email) {
 		email = ((email != null) ? email : "").trim();
 
-		if (email.length() == 0)
-		{
-			return Result.<Email>Fail("Email should not be empty");
+		if (email.length() == 0) {
+			throw new IllegalArgumentException("Email should not be empty");
 		}
 
-		if (!Regex.IsMatch(email, "^(.+)@(.+)$"))
-		{
-			return Result.<Email>Fail("Email is invalid");
+		Pattern regex = Pattern.compile("^(.+)@(.+)$");
+		if (!regex.matcher(email).find()) {
+			throw new IllegalArgumentException("Email is invalid");
 		}
 
-		return Result.Ok(new Email(email));
+		return new Email(email);
 	}
 
 	@Override
-	protected boolean EqualsCore(Email other)
-	{
-		return getValue().equals(other.getValue(), StringComparison.InvariantCultureIgnoreCase);
+	protected boolean EqualsCore(Email other) {
+		return getValue().equalsIgnoreCase(other.getValue());
 	}
 
 	@Override
-	protected int GetHashCodeCore()
-	{
+	protected int GetHashCodeCore() {
 		return getValue().hashCode();
 	}
 
-//C# TO JAVA CONVERTER TODO TASK: The following operator overload is not converted by C# to Java Converter:
-	public static explicit operator Email(String email)
-	{
-		return Create(email).Value;
-	}
-
-//C# TO JAVA CONVERTER TODO TASK: The following operator overload is not converted by C# to Java Converter:
-	public static implicit operator String(Email email)
-	{
-		return email.getValue();
-	}
 }

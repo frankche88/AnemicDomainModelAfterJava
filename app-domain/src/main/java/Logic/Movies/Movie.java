@@ -1,36 +1,38 @@
 package Logic.Movies;
 
-import Logic.Common.*;
-import Logic.Customers.*;
-import java.time.*;
-import java.math.*;
+import java.math.BigDecimal;
 
-public abstract class Movie extends Entity
-{
+import Logic.Common.Entity;
+import Logic.Customers.CustomerStatus;
+import Logic.Customers.Dollars;
+import Logic.Customers.ExpirationDate;
+import Logic.Customers.LicensingModel;
+
+public abstract class Movie extends Entity {
 	private String Name;
-	public String getName()
-	{
+
+	public String getName() {
 		return Name;
 	}
-	protected void setName(String value)
-	{
+
+	protected void setName(String value) {
 		Name = value;
 	}
+
 	private LicensingModel LicensingModel = getLicensingModel().values()[0];
-	protected LicensingModel getLicensingModel()
-	{
+
+	protected LicensingModel getLicensingModel() {
 		return LicensingModel;
 	}
-	protected void setLicensingModel(LicensingModel value)
-	{
+
+	protected void setLicensingModel(LicensingModel value) {
 		LicensingModel = value;
 	}
 
 	public abstract ExpirationDate GetExpirationDate();
 
-	public Dollars CalculatePrice(CustomerStatus status)
-	{
-		BigDecimal modifier = 1 - status.GetDiscount();
+	public Dollars CalculatePrice(CustomerStatus status) {
+		BigDecimal modifier = new BigDecimal(1).subtract(status.GetDiscount());
 		return Logic.Customers.Dollars.OpMultiply(GetBasePrice(), modifier);
 	}
 

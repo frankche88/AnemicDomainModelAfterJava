@@ -11,7 +11,7 @@ tasks.withType(JavaCompile) {
 dependencies {
 	compile (project(':app-domain'))
     
-	compile (project(':infrastructure-hibernate'))
+	compile (project(':app-infrastructure-hibernate'))
 	
     compileOnly group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
     

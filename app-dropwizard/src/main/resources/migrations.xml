@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+
+
+
+	<changeSet id="1" author="frankche88">
+
+
+		<createTable tableName="Customer">
+			<column name="CustomerID" type="bigint" autoIncrement="true"
+				defaultValueSequenceNext="customer_id_seq" startWith="100">
+				<constraints primaryKey="true" nullable="false"
+					primaryKeyName="pk_customer" />
+			</column>
+			<column name="Name" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="Email" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="Status" type="integer">
+				<constraints nullable="false" />
+			</column>
+			<column name="StatusExpirationDate" type="datetime">
+				<constraints nullable="true" />
+			</column>
+			<column name="MoneySpent" type="DECIMAL(18, 2)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createTable tableName="Movie">
+			<column name="MovieID" type="bigint" autoIncrement="true"
+				defaultValueSequenceNext="movie_id_seq" startWith="100">
+				<constraints primaryKey="true" nullable="false"
+					primaryKeyName="PK_Movie" />
+			</column>
+			<column name="Name" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="LicensingModel" type="integer">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createTable tableName="PurchasedMovie">
+			<column name="PurchasedMovieID" type="bigint"
+				autoIncrement="true"
+				defaultValueSequenceNext="PurchasedMovieID_id_seq" startWith="100">
+				<constraints primaryKey="true" nullable="false"
+					primaryKeyName="PK_Movie" />
+			</column>
+			<column name="MovieID" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="CustomerID" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="Price" type="DECIMAL(18, 2)">
+				<constraints nullable="false" />
+			</column>
+			<column name="PurchaseDate" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="ExpirationDate" type="datetime">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+
+
+
+	</changeSet>
+
+
+
+
+
+	<changeSet author="frankche88" id="insert-1">
+		<insert dbms="h2, mysql, postgresql" tableName="Customer">
+			<column name="CustomerID" value="1" />
+			<column name="Name" value="James Peterson" />
+			<column name="Email" value="james.peterson@gmail.com" />
+			<column name="Status" value="1" />
+			<column name="MoneySpent" value="16.00" />
+		</insert>
+
+		<insert dbms="h2, mysql, postgresql" tableName="Customer">
+			<column name="CustomerID" value="2" />
+			<column name="Name" value="Michal Samson" />
+			<column name="Email" value="m.samson@yahoo.com" />
+			<column name="Status" value="2" />
+			<column name="StatusExpirationDate"
+				value="'2018-10-14 01:37:27.000'" />
+			<column name="MoneySpent" value="9.00" />
+		</insert>
+
+		<insert dbms="h2, mysql, postgresql" tableName="Customer">
+			<column name="CustomerID" value="4" />
+			<column name="Name" value="Alan Turing 2" />
+			<column name="Email" value="the.alan@gmail.com" />
+			<column name="Status" value="1" />
+			<column name="MoneySpent" value="0.00" />
+		</insert>
+
+		<insert dbms="h2, mysql, postgresql" tableName="Customer">
+			<column name="CustomerID" value="5" />
+			<column name="Name" value="Alan Turing" />
+			<column name="Email" value="the.alan2@gmail.com" />
+			<column name="Status" value="1" />
+			<column name="MoneySpent" value="1004.00" />
+		</insert>
+
+		<insert dbms="h2, mysql, postgresql" tableName="Customer">
+			<column name="CustomerID" value="6" />
+			<column name="Name" value="Alan Turing" />
+			<column name="Email" value="the.alan3@gmail.com" />
+			<column name="Status" value="1" />
+			<column name="MoneySpent" value="0.00" />
+		</insert>
+
+		<insert dbms="h2, mysql, postgresql" tableName="Movie">
+			<column name="MovieID" value="1" />
+			<column name="Name" value="The Great Gatsby" />
+			<column name="LicensingModel" value="1" />
+		</insert>
+
+		<insert dbms="h2, mysql, postgresql" tableName="Movie">
+			<column name="MovieID" value="2" />
+			<column name="Name" value="The Secret Life of Pets" />
+			<column name="LicensingModel" value="2" />
+		</insert>
+
+		<insert dbms="h2, mysql, postgresql" tableName="PurchasedMovie">
+			<column name="PurchasedMovieID" value="1" />
+			<column name="MovieID" value="1" />
+			<column name="CustomerID" value="2" />
+			<column name="Price" value="5.00" />
+			<column name="PurchaseDate" value="2017-09-16 16:30:05.773" />
+			<column name="ExpirationDate" value="2017-09-18 00:00:00.000" />
+		</insert>
+
+		<insert dbms="h2, mysql, postgresql" tableName="PurchasedMovie">
+			<column name="PurchasedMovieID" value="2" />
+			<column name="MovieID" value="2" />
+			<column name="CustomerID" value="2" />
+			<column name="Price" value="4.00" />
+			<column name="PurchaseDate" value="2017-09-15 15:30:05.773" />
+		</insert>
+
+		<insert dbms="h2, mysql, postgresql" tableName="PurchasedMovie">
+			<column name="PurchasedMovieID" value="3" />
+			<column name="MovieID" value="1" />
+			<column name="CustomerID" value="5" />
+			<column name="Price" value="4.00" />
+			<column name="PurchaseDate" value="2017-10-07 23:54:22.000" />
+			<column name="ExpirationDate" value="2017-10-09 23:54:22.000" />
+		</insert>
+
+		<insert dbms="h2, mysql, postgresql" tableName="PurchasedMovie">
+			<column name="PurchasedMovieID" value="6" />
+			<column name="MovieID" value="1" />
+			<column name="CustomerID" value="1" />
+			<column name="Price" value="4.00" />
+			<column name="PurchaseDate" value="2017-10-15 13:26:19.000" />
+			<column name="ExpirationDate" value="2017-10-17 13:26:19.000" />
+		</insert>
+
+		<insert dbms="h2, mysql, postgresql" tableName="PurchasedMovie">
+			<column name="PurchasedMovieID" value="7" />
+			<column name="MovieID" value="1" />
+			<column name="CustomerID" value="1" />
+			<column name="Price" value="4.00" />
+			<column name="PurchaseDate" value="2017-10-22 16:06:51.000" />
+			<column name="ExpirationDate" value="2017-10-24 16:06:51.000" />
+		</insert>
+
+	</changeSet>
+
+
+
+	<changeSet author="bvera" id="alter-table">
+
+		<addForeignKeyConstraint
+			baseColumnNames="CustomerID" baseTableName="PurchasedMovie"
+			constraintName="FK_PurchasedMovie_Customer"
+			referencedColumnNames="CustomerID" referencedTableName="Customer" />
+
+		<addForeignKeyConstraint
+			baseColumnNames="MovieID" baseTableName="PurchasedMovie"
+			constraintName="FK_PurchasedMovie_Movie"
+			referencedColumnNames="CustomerID" referencedTableName="MovieID" />
+
+	</changeSet>
+
+
+
+
+
+
+</databaseChangeLog>

@@ -1,17 +1,15 @@
 package Logic.Customers;
 
-import Logic.Common.*;
-import Logic.Utils.*;
+import Logic.Common.Repository;
+import Logic.Utils.UnitOfWork;
+import antlr.collections.List;
 
-public class CustomerRepository extends Repository<Customer>
-{
-	public CustomerRepository(UnitOfWork unitOfWork)
-	{
+public class CustomerRepository extends Repository<Customer> {
+	public CustomerRepository(UnitOfWork unitOfWork) {
 		super(unitOfWork);
 	}
 
-	public final IReadOnlyList<Customer> GetList()
-	{
+	public final List<Customer> GetList() {
 		return _unitOfWork.<Customer>Query().ToList();
 	}
 

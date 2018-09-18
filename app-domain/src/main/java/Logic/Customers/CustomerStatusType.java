@@ -1,10 +1,5 @@
 package Logic.Customers;
 
-import CSharpFunctionalExtensions.*;
-import java.util.*;
-import java.time.*;
-import java.math.*;
-
 public enum CustomerStatusType
 {
 	Regular(1),

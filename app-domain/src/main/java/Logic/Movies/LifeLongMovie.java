@@ -1,9 +1,9 @@
 package Logic.Movies;
 
-import Logic.Common.*;
-import Logic.Customers.*;
-import java.time.*;
-import java.math.*;
+import java.math.BigDecimal;
+
+import Logic.Customers.Dollars;
+import Logic.Customers.ExpirationDate;
 
 public class LifeLongMovie extends Movie
 {
@@ -16,6 +16,6 @@ public class LifeLongMovie extends Movie
 	@Override
 	protected Dollars GetBasePrice()
 	{
-		return Dollars.Of(8);
+		return Dollars.Of(new BigDecimal(8));
 	}
 }

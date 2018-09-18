@@ -47,10 +47,10 @@ dependencies {
 	compile (project(':app-domain')) {
 	    transitive = false
 	}
-	compile (project(':infrastructure-hibernate')) {
+	compile (project(':app-infrastructure-hibernate')) {
 	    transitive = false
 	}
-	compile (project(':application-service')) {
+	compile (project(':app-service')) {
 	    transitive = false
 	}
 	

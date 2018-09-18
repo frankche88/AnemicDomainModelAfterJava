@@ -1,85 +1,85 @@
 package Logic.Customers;
 
-import Logic.Common.*;
-import Logic.Movies.*;
-import java.util.*;
-import java.time.*;
-import java.math.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
-public class PurchasedMovie extends Entity
-{
+import Logic.Common.Entity;
+import Logic.Movies.Movie;
+
+public class PurchasedMovie extends Entity {
 	private Movie Movie;
-	public Movie getMovie()
-	{
+
+	public Movie getMovie() {
 		return Movie;
 	}
-	protected void setMovie(Movie value)
-	{
+
+	protected void setMovie(Movie value) {
 		Movie = value;
 	}
+
 	private Customer Customer;
-	public Customer getCustomer()
-	{
+
+	public Customer getCustomer() {
 		return Customer;
 	}
-	protected void setCustomer(Customer value)
-	{
+
+	protected void setCustomer(Customer value) {
 		Customer = value;
 	}
 
-	private BigDecimal _price = new BigDecimal(0);
-	public Dollars getPrice()
-	{
-		return Dollars.Of(_price);
+	private Dollars _price = Dollars.Of(new BigDecimal(0));
+
+	public Dollars getPrice() {
+		return _price;
 	}
-	protected void setPrice(Dollars value)
-	{
+
+	protected void setPrice(Dollars value) {
 		_price = value;
 	}
 
 	private LocalDateTime PurchaseDate = LocalDateTime.MIN;
-	public LocalDateTime getPurchaseDate()
-	{
+
+	public LocalDateTime getPurchaseDate() {
 		return PurchaseDate;
 	}
-	protected void setPurchaseDate(LocalDateTime value)
-	{
+
+	protected void setPurchaseDate(LocalDateTime value) {
 		PurchaseDate = value;
 	}
 
-	private Optional<LocalDateTime> _expirationDate = Optional.empty();
-	public ExpirationDate getExpirationDate()
-	{
-		return (ExpirationDate)_expirationDate;
-	}
-	protected void setExpirationDate(ExpirationDate value)
-	{
-		_expirationDate = Optional.of(value);
+	private ExpirationDate _expirationDate;
+
+	public ExpirationDate getExpirationDate() {
+		return (ExpirationDate) _expirationDate;
 	}
 
-	protected PurchasedMovie()
-	{
+	protected void setExpirationDate(ExpirationDate value) {
+		_expirationDate = value;
 	}
 
-	public PurchasedMovie(Movie movie, Customer customer, Dollars price, ExpirationDate expirationDate)
-	{
-		if (price == null || price.getIsZero())
-		{
+	protected PurchasedMovie() {
+	}
+
+	public PurchasedMovie(Movie movie, Customer customer, Dollars price, ExpirationDate expirationDate) {
+		if (price == null || price.getIsZero()) {
 			throw new IllegalArgumentException("price");
 		}
-		if (expirationDate == null || expirationDate.getIsExpired())
-		{
+		if (expirationDate == null || expirationDate.getIsExpired()) {
 			throw new IllegalArgumentException("expirationDate");
 		}
 
-//C# TO JAVA CONVERTER TODO TASK: Throw expressions are not converted by C# to Java Converter:
-//ORIGINAL LINE: Movie = movie ?? throw new ArgumentNullException(nameof(movie));
-		setMovie((movie != null) ? movie : throw new NullPointerException("movie"));
-//C# TO JAVA CONVERTER TODO TASK: Throw expressions are not converted by C# to Java Converter:
-//ORIGINAL LINE: Customer = customer ?? throw new ArgumentNullException(nameof(customer));
-		setCustomer((customer != null) ? customer : throw new NullPointerException("customer"));
+		if (movie != null) {
+			throw new NullPointerException("movie");
+		}
+
+		if (customer != null) {
+			throw new NullPointerException("customer");
+		}
+
+		setMovie(movie);
+		setCustomer(customer);
 		setPrice(price);
 		setExpirationDate(expirationDate);
-		setPurchaseDate(LocalDateTime.UtcNow);
+		setPurchaseDate(LocalDateTime.now());
 	}
 }

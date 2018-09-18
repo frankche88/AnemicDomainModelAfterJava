@@ -1,2 +1,2 @@
-include 'app-domain','application-service','infrastructure-hibernate', 'application-dropwizard'
+include 'app-domain','app-service','app-infrastructure-hibernate', 'app-dropwizard'
 rootProject.name = 'AnemicDomainModelAfterJava'

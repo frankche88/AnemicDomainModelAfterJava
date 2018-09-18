@@ -24,29 +24,6 @@ public class Envelope<T>
 	{
 		Result = result;
 		ErrorMessage = errorMessage;
-		TimeGenerated = LocalDateTime.UtcNow;
-	}
-}
-
-public class Envelope extends Envelope<String>
-{
-	protected Envelope(String errorMessage)
-	{
-		super(null, errorMessage);
-	}
-
-	public static <T> Envelope<T> Ok(T result)
-	{
-		return new Envelope<T>(result, null);
-	}
-
-	public static Envelope Ok()
-	{
-		return new Envelope(null);
-	}
-
-	public static Envelope Error(String errorMessage)
-	{
-		return new Envelope(errorMessage);
+		TimeGenerated = LocalDateTime.now();
 	}
 }
