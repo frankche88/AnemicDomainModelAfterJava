@@ -1,26 +1,20 @@
 package app.customer.api.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.xml.transform.Result;
 
 import app.customer.application.dto.CreateCustomerDto;
 import app.customer.application.dto.CustomerDto;
@@ -30,9 +24,9 @@ import app.customer.application.dto.UpdateCustomerDto;
 import app.customers.domain.entity.Customer;
 import app.customers.domain.entity.CustomerName;
 import app.customers.domain.entity.Email;
+import app.customers.domain.entity.PurchasedMovie;
 import app.movie.application.dto.MovieDto;
 import app.movies.domain.entity.Movie;
-
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -82,23 +76,34 @@ public class CustomerController {
 		*/
 		
 		
-		app.customers.domain.entity.Customer customer = _customerRepository.getById(id);
+		Customer customer = _customerRepository.getById(id);
 		if (customer == null) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
+		
+		List<PurchasedMovieDto> purchasedMovies = customer.getPurchasedMovies().stream().map(this::purchasedMoviesMapperPurchasedMovieDto).collect(Collectors.toList());
 
-		PurchasedMovieDto tempVar = new PurchasedMovieDto();
-		tempVar.setPrice(x.Price);
-		tempVar.setExpirationDate(x.ExpirationDate);
-		tempVar.setPurchaseDate(x.PurchaseDate);
-		MovieDto tempVar2 = new MovieDto();
-		tempVar2.setId(x.Movie.Id);
-		tempVar2.setName(x.Movie.Name);
-		tempVar.setMovie(tempVar2);
+		
 		CustomerDto dto = new CustomerDto {Id = customer.Id, Name = customer.Name.Value, Email = customer.Email.Value, MoneySpent = customer.MoneySpent, Status = customer.Status.Type.toString(), StatusExpirationDate = customer.Status.ExpirationDate, PurchasedMovies = customer.PurchasedMovies.Select(x -> tempVar).ToList()};
 
 		return Ok(dto);
 	}
+	
+	private PurchasedMovieDto purchasedMoviesMapperPurchasedMovieDto(PurchasedMovie x) {
+		
+		PurchasedMovieDto tempVar = new PurchasedMovieDto();
+		tempVar.setPrice(x.getPrice().getValue());
+		tempVar.setExpirationDate(Optional.of(x.getExpirationDate().getDate()));
+		tempVar.setPurchaseDate(x.getPurchaseDate());
+		MovieDto tempVar2 = new MovieDto();
+		tempVar2.setId(x.getMovie().getId());
+		tempVar2.setName(x.getMovie().getName());
+		tempVar.setMovie(tempVar2);
+		
+		return tempVar;
+		
+	}
+	
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
