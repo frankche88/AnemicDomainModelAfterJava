@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -104,18 +106,40 @@ public class CustomerController {
 	@ApiOperation(value = "List customers", httpMethod = "GET", response = CustomerInListDto.class, responseContainer = "List")
 	public final Response GetList() {
 		List<Customer> customers = _customerRepository.getList();
-
-		CustomerInListDto tempVar = new CustomerInListDto();
-		tempVar.setId(x.Id);
-		tempVar.setName(x.Name.Value);
-		tempVar.setEmail(x.Email.Value);
-		tempVar.setMoneySpent(x.MoneySpent);
-		tempVar.setStatus(x.Status.Type.toString());
-		tempVar.setStatusExpirationDate(x.Status.ExpirationDate);
-		ArrayList<CustomerInListDto> dtos = customers.Select(x -> tempVar).ToList();
+		
+		/*
+		 
+		 List<CustomerInListDto> dtos = customers.Select(x => new CustomerInListDto
+            {
+                Id = x.Id,
+                Name = x.Name.Value,
+                Email = x.Email.Value,
+                MoneySpent = x.MoneySpent,
+                Status = x.Status.Type.ToString(),
+                StatusExpirationDate = x.Status.ExpirationDate
+            }).ToList();
+		 
+		 */
+		
+		List<CustomerInListDto> dtos = customers.stream().map(this::customerMappToCustomerInListDto).collect(Collectors.toList());
 
 		return Response.ok(dtos).build();
 	}
+	
+	private CustomerInListDto customerMappToCustomerInListDto(Customer x) {
+		CustomerInListDto tempVar = new CustomerInListDto();
+		tempVar.setId(x.getId());
+		tempVar.setName(x.getName().getValue());
+		tempVar.setEmail(x.getEmail().getValue());
+		tempVar.setMoneySpent(x.getMoneySpent().getValue());
+		tempVar.setStatus(x.getStatus().getType().toString());
+		tempVar.setStatusExpirationDate(Optional.of(x.getStatus().getExpirationDate().getDate()));
+		
+		return tempVar;
+		
+	}
+	
+	
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
