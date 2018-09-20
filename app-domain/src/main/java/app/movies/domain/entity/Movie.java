@@ -9,7 +9,8 @@ import app.customers.domain.entity.ExpirationDate;
 import app.customers.domain.entity.LicensingModel;
 
 public abstract class Movie extends Entity {
-	private String Name;
+    
+    private String Name;
 
 	public String getName() {
 		return Name;
@@ -32,7 +33,7 @@ public abstract class Movie extends Entity {
 	public abstract ExpirationDate getExpirationDate();
 
 	public Dollars calculatePrice(CustomerStatus status) {
-		BigDecimal modifier = new BigDecimal(1).subtract(status.GetDiscount());
+		BigDecimal modifier = new BigDecimal(1).subtract(status.getDiscount());
 		return app.customers.domain.entity.Dollars.OpMultiply(getBasePrice(), modifier);
 	}
 

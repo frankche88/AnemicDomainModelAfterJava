@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
-       jcenter()
+	jcenter()
     }
     dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
@@ -13,10 +13,10 @@ apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'maven'
 
-mainClassName = 'banking.BankingApplication'
+mainClassName = 'app.App'
 
 
-description = """banking-api-clean-architecture"""
+description = """PurchaseMovie"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -33,12 +33,12 @@ shadowJar {
 
 runShadow {
   //args 'server'
-  args  'server', 'src/main/resources/banking.yml'
+  args  'server', 'src/main/resources/config.yml'
 }
 
 run {
-    //args 'db', 'migrate', 'src/main/resources/bankingDesa.yml'
-    args 'server', 'src/main/resources/banking.yml'
+    //args 'db', 'migrate', 'src/main/resources/config.yml'
+    args 'server', 'src/main/resources/config.yml'
 
 }
 

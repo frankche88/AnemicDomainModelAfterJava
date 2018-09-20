@@ -30,4 +30,10 @@ public class CustomerHibernateRepository extends BaseHibernateRepository<Custome
 		return null;//(Customer)getSession().get(Email.class, email.getValue());
 		
 	}
+
+    @Override
+    public Customer getById(long id) {
+        
+        return getSession().get(Customer.class, id);
+    }
 }

@@ -8,9 +8,19 @@ public class CustomerName extends ValueObject<CustomerName> {
 	public final String getValue() {
 		return Value;
 	}
+	
+	private CustomerName() {
+	    
+	}
 
 	private CustomerName(String value) {
 		Value = value;
+	}
+	
+	protected void setValue(String Value) {
+	    
+	    this.Value = Value;
+	    
 	}
 
 	public static CustomerName Create(String customerName) {

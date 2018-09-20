@@ -14,6 +14,14 @@ public class Email extends ValueObject<Email> {
 	private Email(String value) {
 		Value = value;
 	}
+	
+	private Email() {
+        
+    }
+	
+	protected void setValue(String value) {
+	    this.Value = value;
+	}
 
 	public static Email Create(String email) {
 		email = ((email != null) ? email : "").trim();

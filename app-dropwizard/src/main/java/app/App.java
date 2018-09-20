@@ -22,7 +22,7 @@ public class App  extends Application<AppConfiguration> {
 
 	@Override
 	public String getName() {
-		return "Banking-api";
+		return "PurchaseMovie-api";
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class App  extends Application<AppConfiguration> {
         // register hbn bundle before guice to make sure factory initialized before guice context start
         bootstrap.addBundle(hibernate);
         bootstrap.addBundle(GuiceBundle.builder()
-                .enableAutoConfig("banking")
+                .enableAutoConfig("app")
                 .modules(new HbnModule(hibernate))
                 .build());
 

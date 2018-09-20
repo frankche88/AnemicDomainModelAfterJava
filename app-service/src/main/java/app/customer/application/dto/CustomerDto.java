@@ -1,8 +1,9 @@
 package app.customer.application.dto;
 
-import java.util.*;
-import java.time.*;
-import java.math.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 public class CustomerDto {
 	private long Id;
@@ -65,13 +66,13 @@ public class CustomerDto {
 		MoneySpent = value;
 	}
 
-	private ArrayList<PurchasedMovieDto> PurchasedMovies;
+	private List<PurchasedMovieDto> PurchasedMovies;
 
-	public final ArrayList<PurchasedMovieDto> getPurchasedMovies() {
+	public final List<PurchasedMovieDto> getPurchasedMovies() {
 		return PurchasedMovies;
 	}
 
-	public final void setPurchasedMovies(ArrayList<PurchasedMovieDto> value) {
+	public final void setPurchasedMovies(List<PurchasedMovieDto> value) {
 		PurchasedMovies = value;
 	}
 }

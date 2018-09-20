@@ -24,6 +24,10 @@ public class Customer extends Entity {
 	public Email getEmail() {
 		return (Email) _email;
 	}
+	
+	public void setEmail(Email email) {
+        _email = email;
+    }
 
 	private CustomerStatus Status;
 

@@ -14,12 +14,21 @@ public class CustomerStatus extends ValueObject<CustomerStatus> {
 	public final CustomerStatusType getType() {
 		return Type;
 	}
+	
+	protected final void setType(CustomerStatusType Type) {
+        this.Type = Type;
+    }
 
 	private ExpirationDate _expirationDate;
 
 	public final ExpirationDate getExpirationDate() {
 		return _expirationDate;
 	}
+	
+	protected final void setExpirationDate(ExpirationDate expirationDate) {
+        _expirationDate = expirationDate;
+    }
+	
 
 	public final boolean getIsAdvanced() {
 		return getType() == CustomerStatusType.Advanced && !getExpirationDate().getIsExpired();
@@ -39,7 +48,7 @@ public class CustomerStatus extends ValueObject<CustomerStatus> {
 		_expirationDate = expirationDate;
 	}
 
-	public final BigDecimal GetDiscount() {
+	public final BigDecimal getDiscount() {
 		return getIsAdvanced() ? new BigDecimal(0.25) : java.math.BigDecimal.ZERO;
 	}
 

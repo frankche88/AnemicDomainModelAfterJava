@@ -8,10 +8,18 @@ public class ExpirationDate extends ValueObject<ExpirationDate> {
 	public static final ExpirationDate Infinite = new ExpirationDate(null);
 
 	private LocalDateTime Date;
+	
+	private ExpirationDate() {
+	    
+	}
 
 	public final LocalDateTime getDate() {
 		return Date;
 	}
+	
+	protected final void setDate(LocalDateTime date) {
+        this.Date = date;
+    }
 
 	public final boolean getIsExpired() {
 		return this != Infinite && getDate().compareTo(LocalDateTime.now()) < 0;

@@ -15,4 +15,9 @@ public class MovieHibernateRepository extends BaseHibernateRepository<Movie> imp
 	public final List<Movie> getList() {
 		return (List<Movie>) getSession().createCriteria(Movie.class).list();
 	}
+
+    @Override
+    public Movie getById(long movieId) {
+        return getSession().get(Movie.class, movieId);
+    }
 }

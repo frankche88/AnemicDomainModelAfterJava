@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="app.customers.domain.entity">
+	<class name="Customer" table="Customer">
+        <id name="id" column="CustomerID">
+            <generator class="native"/>
+        </id>
+        
+        <component name="name" class="CustomerName">
+	        <property name="value" column="Name"/>
+	    </component>
+	    
+	    <component name="email" class="Email">
+            <property name="value" column="Email"/>
+        </component>
+        
+        <component name="status" class="CustomerStatus">
+            <property name="type" column="Status">
+                <type name="org.hibernate.type.EnumType">
+			        <param name="enumClass">app.customers.domain.entity.CustomerStatusType</param>
+			    </type>
+            </property>
+            <component name="expirationDate" class="ExpirationDate">
+                <property name="date" column="StatusExpirationDate"/>
+            </component>
+        </component>
+        
+        <component name="moneySpent" class="app.customers.domain.entity.Dollars">
+            <property name="value" column="MoneySpent"/>
+        </component>
+        
+        <!-- 
+        <set name="bankAccounts" inverse="true" cascade="all">
+            <key column="customer_id" not-null="true"/>
+            <one-to-many class="banking.accounts.domain.entity.BankAccount"/>
+        </set>
+         -->
+    </class> 
+</hibernate-mapping>

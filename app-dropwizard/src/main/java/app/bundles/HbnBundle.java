@@ -28,11 +28,14 @@ public class HbnBundle extends HibernateBundle<AppConfiguration> {
 		
 
 		
-		InputStream inputBankAccount = MovieHibernateRepository.class.getClassLoader().getResourceAsStream("hibernate/bankAccount.hbm.xml");
+		InputStream inputMovie = MovieHibernateRepository.class.getClassLoader().getResourceAsStream("hibernate/Movie.hbm.xml");
 		
-		InputStream inputCustomer = CustomerHibernateRepository.class.getClassLoader().getResourceAsStream("hibernate/customer.hbm.xml");
+		InputStream inputPurchasedMovie = MovieHibernateRepository.class.getClassLoader().getResourceAsStream("hibernate/PurchasedMovies.hbm.xml");
 		
-		configuration.addInputStream(inputBankAccount);
+		InputStream inputCustomer = CustomerHibernateRepository.class.getClassLoader().getResourceAsStream("hibernate/Customer.hbm.xml");
+		
+		configuration.addInputStream(inputMovie);
+		configuration.addInputStream(inputPurchasedMovie);
 		configuration.addInputStream(inputCustomer);
 		
     }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping
+	package="app.movies.domain.entity">
+	<class name="Movie" table="Movie" abstract="true" discriminator-value= "-1">
+		<id name="id" type="long" column="MovieID">
+			<generator class="native" />
+		</id>
+		<discriminator column="LicensingModel" type="integer" />
+		
+		<property name="name" column="Name" />
+		
+		<subclass name="TwoDaysMovie" discriminator-value="1">
+
+		</subclass>
+		<subclass name="LifeLongMovie" discriminator-value="2">
+		
+
+		
+		</subclass>
+	</class>
+</hibernate-mapping>

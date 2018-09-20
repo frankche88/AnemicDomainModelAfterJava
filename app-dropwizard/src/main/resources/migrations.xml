@@ -54,7 +54,7 @@
 				autoIncrement="true"
 				defaultValueSequenceNext="PurchasedMovieID_id_seq" startWith="100">
 				<constraints primaryKey="true" nullable="false"
-					primaryKeyName="PK_Movie" />
+					primaryKeyName="PK_PurchasedMovie" />
 			</column>
 			<column name="MovieID" type="bigint">
 				<constraints nullable="false" />
@@ -96,7 +96,7 @@
 			<column name="Email" value="m.samson@yahoo.com" />
 			<column name="Status" value="2" />
 			<column name="StatusExpirationDate"
-				value="'2018-10-14 01:37:27.000'" />
+				value="2018-10-14 01:37:27.000" />
 			<column name="MoneySpent" value="9.00" />
 		</insert>
 
@@ -194,7 +194,7 @@
 		<addForeignKeyConstraint
 			baseColumnNames="MovieID" baseTableName="PurchasedMovie"
 			constraintName="FK_PurchasedMovie_Movie"
-			referencedColumnNames="CustomerID" referencedTableName="MovieID" />
+			referencedColumnNames="MovieID" referencedTableName="Movie" />
 
 	</changeSet>
 

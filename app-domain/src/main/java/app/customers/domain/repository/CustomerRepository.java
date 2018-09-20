@@ -13,4 +13,6 @@ public interface CustomerRepository {
 
 	Customer getById(long id);
 
+    void save(Customer customer);
+
 }

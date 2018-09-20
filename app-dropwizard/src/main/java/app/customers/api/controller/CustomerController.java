@@ -1,4 +1,4 @@
-package app.customer.api.controller;
+package app.customers.api.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,33 +49,6 @@ public class CustomerController {
 	@ApiOperation(value = "Get costomer by id", httpMethod = "GET", response = CustomerDto.class, responseContainer = "Object")
 	public final Response Get(@PathParam("id") long id) {
 		
-		/*
-		
-		
-		var dto = new CustomerDto
-            {
-                Id = customer.Id,
-                Name = customer.Name.Value,
-                Email = customer.Email.Value,
-                MoneySpent = customer.MoneySpent,
-                Status = customer.Status.Type.ToString(),
-                StatusExpirationDate = customer.Status.ExpirationDate,
-                PurchasedMovies = customer.PurchasedMovies.Select(x => new PurchasedMovieDto
-                {
-                    Price = x.Price,
-                    ExpirationDate = x.ExpirationDate,
-                    PurchaseDate = x.PurchaseDate,
-                    Movie = new MovieDto
-                    {
-                        Id = x.Movie.Id,
-                        Name = x.Movie.Name
-                    }
-                }).ToList()
-            };
-		
-		*/
-		
-		
 		Customer customer = _customerRepository.getById(id);
 		if (customer == null) {
 			return Response.status(Status.NOT_FOUND).build();
@@ -83,10 +56,20 @@ public class CustomerController {
 		
 		List<PurchasedMovieDto> purchasedMovies = customer.getPurchasedMovies().stream().map(this::purchasedMoviesMapperPurchasedMovieDto).collect(Collectors.toList());
 
+		CustomerDto dto = new CustomerDto();
 		
-		CustomerDto dto = new CustomerDto {Id = customer.Id, Name = customer.Name.Value, Email = customer.Email.Value, MoneySpent = customer.MoneySpent, Status = customer.Status.Type.toString(), StatusExpirationDate = customer.Status.ExpirationDate, PurchasedMovies = customer.PurchasedMovies.Select(x -> tempVar).ToList()};
+		dto.setId(customer.getId());
+		
+		dto.setName(customer.getName().getValue());
+		dto.setEmail(customer.getEmail().getValue()); 
+		dto.setMoneySpent(customer.getMoneySpent().getValue());
+		dto.setStatus(customer.getStatus().getType().toString());
+		dto.setStatusExpirationDate(Optional.of(customer.getStatus().getExpirationDate().getDate()));
+		dto.setPurchasedMovies(purchasedMovies);
+		
+		
 
-		return Ok(dto);
+		return Response.ok(dto).build();
 	}
 	
 	private PurchasedMovieDto purchasedMoviesMapperPurchasedMovieDto(PurchasedMovie x) {
@@ -111,20 +94,6 @@ public class CustomerController {
 	@ApiOperation(value = "List customers", httpMethod = "GET", response = CustomerInListDto.class, responseContainer = "List")
 	public final Response GetList() {
 		List<Customer> customers = _customerRepository.getList();
-		
-		/*
-		 
-		 List<CustomerInListDto> dtos = customers.Select(x => new CustomerInListDto
-            {
-                Id = x.Id,
-                Name = x.Name.Value,
-                Email = x.Email.Value,
-                MoneySpent = x.MoneySpent,
-                Status = x.Status.Type.ToString(),
-                StatusExpirationDate = x.Status.ExpirationDate
-            }).ToList();
-		 
-		 */
 		
 		List<CustomerInListDto> dtos = customers.stream().map(this::customerMappToCustomerInListDto).collect(Collectors.toList());
 
@@ -190,7 +159,7 @@ public class CustomerController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@UnitOfWork
 	@ApiOperation(value = "Purchase Movie", httpMethod = "POST")
-	public final Response PurchaseMovie(long id, long movieId) {
+	public final Response PurchaseMovie(@PathParam("id") long id, long movieId) {
 		Movie movie = _movieRepository.getById(movieId);
 		if (movie == null) {
 			return Response.status(Status.BAD_REQUEST).entity("Invalid movie id: " + movieId).build();

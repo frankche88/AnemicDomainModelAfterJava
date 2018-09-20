@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="app.customers.domain.entity">
+    <class name="PurchasedMovie" table="PurchasedMovie">
+        <id name="id" type="java.lang.Long">
+            <column name="PurchasedMovieID" />
+            <generator class="native" />
+        </id>
+        <!-- <many-to-one name="movies" class="banking.security.domain.entity.User" 
+            fetch="select"> <column name="username" length="45" not-null="true" /> </many-to-one> -->
+            
+            <!-- <many-to-one name="customer" class="banking.security.domain.entity.User" 
+            fetch="select"> <column name="username" length="45" not-null="true" /> </many-to-one> -->
+            
+            
+
+        <component name="price" class="app.customers.domain.entity.Dollars">
+            <property name="value" column="Price" />
+        </component>
+
+
+        <property name="purchaseDate" column="purchaseDate" />
+
+
+        <component name="expirationDate" class="ExpirationDate">
+            <property name="date" column="ExpirationDate" />
+        </component>
+
+
+    </class>
+</hibernate-mapping>
