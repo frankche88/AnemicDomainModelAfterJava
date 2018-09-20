@@ -56,6 +56,8 @@ public class Customer extends Entity {
 	}
 
 	protected Customer() {
+		setMoneySpent(Dollars.Create(BigDecimal.ZERO));
+		setStatus(CustomerStatus.Regular);
 		_purchasedMovies = new ArrayList<PurchasedMovie>();
 	}
 

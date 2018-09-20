@@ -1,5 +1,6 @@
 package app.customers.domain.entity;
 
+import static app.customers.domain.entity.ExpirationDate.Infinite;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -22,7 +23,7 @@ public class CustomerStatus extends ValueObject<CustomerStatus> {
 	private ExpirationDate _expirationDate;
 
 	public final ExpirationDate getExpirationDate() {
-		return _expirationDate;
+		return _expirationDate == null?Infinite:_expirationDate;
 	}
 	
 	protected final void setExpirationDate(ExpirationDate expirationDate) {
@@ -35,6 +36,7 @@ public class CustomerStatus extends ValueObject<CustomerStatus> {
 	}
 
 	private CustomerStatus() {
+		_expirationDate = Infinite;
 	}
 
 	private CustomerStatus(CustomerStatusType type, ExpirationDate expirationDate) {

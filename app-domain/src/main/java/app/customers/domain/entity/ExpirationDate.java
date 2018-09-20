@@ -40,7 +40,7 @@ public class ExpirationDate extends ValueObject<ExpirationDate> {
 
 	@Override
 	protected int GetHashCodeCore() {
-		return getDate().hashCode();
+		return getDate() == null?-1:getDate().hashCode();
 	}
 
 }

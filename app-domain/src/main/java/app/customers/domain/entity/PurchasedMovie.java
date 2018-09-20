@@ -7,14 +7,15 @@ import app.commons.domain.entity.Entity;
 import app.movies.domain.entity.Movie;
 
 public class PurchasedMovie extends Entity {
-	private Movie Movie;
+	
+	private Movie movie;
 
 	public Movie getMovie() {
-		return Movie;
+		return movie;
 	}
 
 	protected void setMovie(Movie value) {
-		Movie = value;
+		movie = value;
 	}
 
 	private Customer Customer;

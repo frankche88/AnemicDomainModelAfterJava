@@ -6,6 +6,10 @@ import app.commons.domain.entity.ValueObject;
 
 public class Dollars extends ValueObject<Dollars> {
     private static final BigDecimal MaxDollarAmount = new BigDecimal(1_000_000);
+    
+    protected Dollars(){
+    	
+    }
 
     private BigDecimal Value = new BigDecimal(0);
 

@@ -7,8 +7,17 @@
             <column name="PurchasedMovieID" />
             <generator class="native" />
         </id>
+        
+        <many-to-one name="movie" class="app.movies.domain.entity.Movie"
+            column="MovieID" unique="true" not-null="true"
+            cascade="all" />
+            
+        <many-to-one name="customer" class="app.customers.domain.entity.Customer"
+            column="CustomerID" unique="true" not-null="true"
+            cascade="all" />
+        
         <!-- <many-to-one name="movies" class="banking.security.domain.entity.User" 
-            fetch="select"> <column name="username" length="45" not-null="true" /> </many-to-one> -->
+            fetch="select"> <column name="MovieID" length="45" not-null="true" /> </many-to-one> -->
             
             <!-- <many-to-one name="customer" class="banking.security.domain.entity.User" 
             fetch="select"> <column name="username" length="45" not-null="true" /> </many-to-one> -->

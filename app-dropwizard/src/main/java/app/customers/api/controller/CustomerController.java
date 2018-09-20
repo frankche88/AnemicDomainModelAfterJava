@@ -64,7 +64,7 @@ public class CustomerController {
 		dto.setEmail(customer.getEmail().getValue()); 
 		dto.setMoneySpent(customer.getMoneySpent().getValue());
 		dto.setStatus(customer.getStatus().getType().toString());
-		dto.setStatusExpirationDate(Optional.of(customer.getStatus().getExpirationDate().getDate()));
+		dto.setStatusExpirationDate(Optional.ofNullable(customer.getStatus().getExpirationDate().getDate()));
 		dto.setPurchasedMovies(purchasedMovies);
 		
 		
@@ -107,7 +107,11 @@ public class CustomerController {
 		tempVar.setEmail(x.getEmail().getValue());
 		tempVar.setMoneySpent(x.getMoneySpent().getValue());
 		tempVar.setStatus(x.getStatus().getType().toString());
-		tempVar.setStatusExpirationDate(Optional.of(x.getStatus().getExpirationDate().getDate()));
+		
+		tempVar.setStatusExpirationDate(Optional.ofNullable(
+				x.getStatus()
+				.getExpirationDate()
+				.getDate()));
 		
 		return tempVar;
 		

@@ -2,6 +2,7 @@ package app.customers.domain.entity;
 
 public enum CustomerStatusType
 {
+	Default(0),
 	Regular(1),
 	Advanced(2);
 
