@@ -38,9 +38,9 @@ public class Dollars extends ValueObject<Dollars> {
             throw new IllegalArgumentException("Dollar amount cannot be greater than " + MaxDollarAmount);
         }
 
-        if (dollarAmount.doubleValue() % 0.01 > 0) {
-            throw new IllegalArgumentException("Dollar amount cannot contain part of a penny");
-        }
+//        if (dollarAmount.doubleValue() % 0.01 > 0) {
+//            throw new IllegalArgumentException("Dollar amount cannot contain part of a penny");
+//        }
 
         return new Dollars(dollarAmount);
     }

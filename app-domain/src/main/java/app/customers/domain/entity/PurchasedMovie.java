@@ -69,11 +69,11 @@ public class PurchasedMovie extends Entity {
 			throw new IllegalArgumentException("expirationDate");
 		}
 
-		if (movie != null) {
+		if (movie == null) {
 			throw new NullPointerException("movie");
 		}
 
-		if (customer != null) {
+		if (customer == null) {
 			throw new NullPointerException("customer");
 		}
 
