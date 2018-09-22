@@ -20,14 +20,14 @@ public abstract class Movie extends Entity {
 		Name = value;
 	}
 
-	private LicensingModel licensingModel = LicensingModel.values()[0];
+	private LicensingModel LicensingModel = getLicensingModel().values()[0];
 
 	protected LicensingModel getLicensingModel() {
-		return licensingModel;
+		return LicensingModel;
 	}
 
 	protected void setLicensingModel(LicensingModel value) {
-		licensingModel = value;
+		LicensingModel = value;
 	}
 
 	public abstract ExpirationDate getExpirationDate();

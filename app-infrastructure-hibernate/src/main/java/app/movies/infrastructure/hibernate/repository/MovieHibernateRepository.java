@@ -11,7 +11,6 @@ public class MovieHibernateRepository extends BaseHibernateRepository<Movie> imp
 	/* (non-Javadoc)
 	 * @see app.movies.infrastructure.hibernate.repository.MovieRepository#getList()
 	 */
-	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public final List<Movie> getList() {
 		return (List<Movie>) getSession().createCriteria(Movie.class).list();

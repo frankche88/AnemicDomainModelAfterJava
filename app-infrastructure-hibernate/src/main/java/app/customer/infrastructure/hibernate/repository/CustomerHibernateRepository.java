@@ -9,13 +9,9 @@ import app.customers.domain.repository.CustomerRepository;
 
 public class CustomerHibernateRepository extends BaseHibernateRepository<Customer> implements CustomerRepository {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * app.customer.infrastructure.hibernate.repository.CustomerRepository#getList()
+	/* (non-Javadoc)
+	 * @see app.customer.infrastructure.hibernate.repository.CustomerRepository#getList()
 	 */
-	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public final List<Customer> getList() {
 
@@ -23,34 +19,21 @@ public class CustomerHibernateRepository extends BaseHibernateRepository<Custome
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see app.customer.infrastructure.hibernate.repository.CustomerRepository#
-	 * getByEmail(app.customers.domain.entity.Email)
+	/* (non-Javadoc)
+	 * @see app.customer.infrastructure.hibernate.repository.CustomerRepository#getByEmail(app.customers.domain.entity.Email)
 	 */
 	@Override
-	public final Customer getByEmail(Email email) {
-		// return _unitOfWork.<Customer>Query().SingleOrDefault(x =
-		// email.getValue().equals(> x.Email));
-		// find customer by email
+	public final Customer getByEmail(Email email)
+	{
+		//return _unitOfWork.<Customer>Query().SingleOrDefault(x = email.getValue().equals(> x.Email));
+		//find customer  by email
+		return null;//(Customer)getSession().get(Email.class, email.getValue());
 		
-		org.hibernate.query.Query<Customer> query = getSession().createQuery ("from Customer where email.value = :email ", Customer.class);
-		query.setParameter("email", email.getValue());
-		List<Customer> list = query.list();
-		
-		if(list != null && list.size() > 0) {
-			return list.get(0);
-		}
-		
-		
-		return null;// (Customer)getSession().get(Email.class, email.getValue());
-
 	}
 
-	@Override
-	public Customer getById(long id) {
-
-		return getSession().get(Customer.class, id);
-	}
+    @Override
+    public Customer getById(long id) {
+        
+        return getSession().get(Customer.class, id);
+    }
 }

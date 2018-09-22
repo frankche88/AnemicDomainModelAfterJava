@@ -56,8 +56,6 @@ public class Customer extends Entity {
 	}
 
 	protected Customer() {
-		setMoneySpent(Dollars.Create(BigDecimal.ZERO));
-		setStatus(CustomerStatus.Regular);
 		_purchasedMovies = new ArrayList<PurchasedMovie>();
 	}
 
@@ -86,9 +84,9 @@ public class Customer extends Entity {
 	}
 
 	public void purchaseMovie(Movie movie) {
-//		if (hasPurchasedMovie(movie)) {
-//			throw new RuntimeException();
-//		}
+		if (hasPurchasedMovie(movie)) {
+			throw new RuntimeException();
+		}
 
 		ExpirationDate expirationDate = movie.getExpirationDate();
 		Dollars price = movie.calculatePrice(getStatus());

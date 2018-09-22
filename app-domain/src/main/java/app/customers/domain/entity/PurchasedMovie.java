@@ -7,15 +7,14 @@ import app.commons.domain.entity.Entity;
 import app.movies.domain.entity.Movie;
 
 public class PurchasedMovie extends Entity {
-	
-	private Movie movie;
+	private Movie Movie;
 
 	public Movie getMovie() {
-		return movie;
+		return Movie;
 	}
 
 	protected void setMovie(Movie value) {
-		movie = value;
+		Movie = value;
 	}
 
 	private Customer Customer;
@@ -69,11 +68,11 @@ public class PurchasedMovie extends Entity {
 			throw new IllegalArgumentException("expirationDate");
 		}
 
-		if (movie == null) {
+		if (movie != null) {
 			throw new NullPointerException("movie");
 		}
 
-		if (customer == null) {
+		if (customer != null) {
 			throw new NullPointerException("customer");
 		}
 

@@ -36,7 +36,7 @@ database:
     hibernate.hbm2ddl.auto: validate # create validate validates schema when service is started
 #,app.movies.api.controller,banking.oauth.api.controller
 swagger:
-  resourcePackage: app.customers.api.controller 
+  resourcePackage: app.purchases.api.controller,app.customers.api.controller
   schemes:
     - http
   
