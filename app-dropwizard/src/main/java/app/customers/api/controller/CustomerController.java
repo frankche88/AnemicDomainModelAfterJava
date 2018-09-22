@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import app.commons.api.utils.Envelope;
 import app.customer.application.dto.CreateCustomerDto;
 import app.customer.application.dto.CustomerDto;
 import app.customer.application.dto.CustomerInListDto;
@@ -121,7 +122,12 @@ public class CustomerController {
 		Email emailOrError = Email.Create(item.getEmail());
 
 		if (_customerRepository.getByEmail(emailOrError) != null) {
-			return Response.status(Status.BAD_REQUEST).entity("Email is already in use: " + item.getEmail()).build();
+			//return Response.status(Status.BAD_REQUEST).entity("Email is already in use: " + item.getEmail()).build();
+			
+			Envelope<String> error = new Envelope<String>("Bad Customer email", "Email is already in use: " + item.getEmail());
+
+			return Response.status(Status.BAD_REQUEST).entity(error).build();
+			
 		}
 
 		Customer customer = new Customer(customerNameOrError, emailOrError);
@@ -141,7 +147,12 @@ public class CustomerController {
 
 		Customer customer = _customerRepository.getById(id);
 		if (customer == null) {
-			return Response.status(Status.BAD_REQUEST).entity("Invalid customer id: " + id).build();
+			//return Response.status(Status.BAD_REQUEST).entity("Invalid customer id: " + id).build();
+			
+			Envelope<String> error = new Envelope<String>("Customer Not update", "Invalid customer promote id: " + id);
+
+			return Response.status(Status.BAD_REQUEST).entity(error).build();
+			
 		}
 
 		customer.setName(customerNameOrError);
@@ -159,13 +170,23 @@ public class CustomerController {
 	public final Response PromoteCustomer(long id) {
 		Customer customer = _customerRepository.getById(id);
 		if (customer == null) {
-			return Response.status(Status.BAD_REQUEST).entity("Invalid customer id: " + id).build();
+			//return Response.status(Status.BAD_REQUEST).entity("Invalid customer id: " + id).build();
+			
+			Envelope<String> error = new Envelope<String>("Customer Not found", "Invalid customer id: " + id);
+
+			return Response.status(Status.BAD_REQUEST).entity(error).build();
+			
 
 		}
 
 		boolean promotionCheck = customer.canPromote();
 		if (!promotionCheck) {
-			return Response.status(Status.BAD_REQUEST).entity("error al promocionar customer id: " + id).build();
+			//return Response.status(Status.BAD_REQUEST).entity("error al promocionar customer id: " + id).build();
+			
+			Envelope<String> error = new Envelope<String>("Customer Not promote", "Invalid customer promote id: " + id);
+
+			return Response.status(Status.BAD_REQUEST).entity(error).build();
+			
 		}
 
 		customer.promote();

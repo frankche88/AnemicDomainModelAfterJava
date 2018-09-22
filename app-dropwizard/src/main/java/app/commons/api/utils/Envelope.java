@@ -1,27 +1,27 @@
 package app.commons.api.utils;
 
-import java.time.*;
+import java.time.LocalDateTime;
 
-public class Envelope<T>
-{
+public class Envelope<T> {
 	private T Result;
-	public final T getResult()
-	{
+
+	public final T getResult() {
 		return Result;
 	}
+
 	private String ErrorMessage;
-	public final String getErrorMessage()
-	{
+
+	public final String getErrorMessage() {
 		return ErrorMessage;
 	}
+
 	private LocalDateTime TimeGenerated = LocalDateTime.MIN;
-	public final LocalDateTime getTimeGenerated()
-	{
+
+	public final LocalDateTime getTimeGenerated() {
 		return TimeGenerated;
 	}
 
-	protected Envelope(T result, String errorMessage)
-	{
+	public Envelope(T result, String errorMessage) {
 		Result = result;
 		ErrorMessage = errorMessage;
 		TimeGenerated = LocalDateTime.now();

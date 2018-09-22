@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import app.commons.api.utils.Envelope;
 import app.customers.domain.entity.Customer;
 import app.movies.domain.entity.Movie;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -71,7 +72,6 @@ public class PurchaseController {
 //		return tempVar;
 //		
 //	}
-	
 
 	@POST
 	@Path("{id}/movies")
@@ -80,25 +80,43 @@ public class PurchaseController {
 	@UnitOfWork
 	@ApiOperation(value = "Purchase Movie", httpMethod = "POST")
 	public final Response PurchaseMovie(@PathParam("id") long id, long movieId) {
-		Movie movie = _movieRepository.getById(movieId);
-		if (movie == null) {
-			return Response.status(Status.BAD_REQUEST).entity("Invalid movie id: " + movieId).build();
+		try {
+			Movie movie = _movieRepository.getById(movieId);
+			if (movie == null) {
+				//return Response.status(Status.BAD_REQUEST).entity("Invalid movie id: " + movieId).build();
+				Envelope<String> error = new Envelope<String>("Movie Not found", "Invalid movie id: " + movieId);
+
+				return Response.status(Status.BAD_REQUEST).entity(error).build();
+			}
+
+			Customer customer = _customerRepository.getById(id);
+			if (customer == null) {
+
+				//return Response.status(Status.BAD_REQUEST).entity("Invalid customer id: " + id).build();
+				Envelope<String> error = new Envelope<String>("Customer Not found", "Invalid customer id: " + id);
+
+				return Response.status(Status.BAD_REQUEST).entity(error).build();
+			}
+
+			if (customer.hasPurchasedMovie(movie)) {
+				
+				Envelope<Movie> error = new Envelope<Movie>(movie, "The movie is already purchased: " + movie.getName());
+
+				return Response.status(Status.BAD_REQUEST).entity(error).build();
+				
+			}
+
+			customer.purchaseMovie(movie);
+
+			return Response.ok().build();
+		} catch (Exception e) {
+
+			Envelope<String> error = new Envelope<String>("Error on purchase", e.getMessage());
+
+			return Response.status(Status.BAD_REQUEST).entity(error).build();
+
 		}
 
-		Customer customer = _customerRepository.getById(id);
-		if (customer == null) {
-
-			return Response.status(Status.BAD_REQUEST).entity("Invalid customer id: " + id).build();
-		}
-
-		if (customer.hasPurchasedMovie(movie)) {
-			return Response.status(Status.BAD_REQUEST).entity("The movie is already purchased: " + movie.getName())
-					.build();
-		}
-
-		customer.purchaseMovie(movie);
-
-		return Response.ok().build();
 	}
 
 }
